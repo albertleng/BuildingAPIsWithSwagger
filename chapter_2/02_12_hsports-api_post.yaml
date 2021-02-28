@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: H Plus Sports API
+  version: 1.0.0
+tags:
+  - name: Article
+    description: Articles for the H Plus Blog
+paths:
+  /article:
+    get:
+      tags:
+        - Article
+      responses:
+        200:
+          description: This is a list of the articles in the blog
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    posted_date:
+                      type: string
+                      format: date
+                      example: April 14, 2017
+                    content:
+                      type: string
+                      example: “What’s the best exercise for losing weight?” is a common question says Dr. Roman Ledger of East Bridge Hospital in San Diego, and his answer is “whatever exercise you’ll do consistently.” Running may burn more calories per minute than walking, but if you’re more likely to stay the course on a walking program, then you’ll burn more calories overall in the long run. When venturing into a new exercise program, Dr. Roman says “it’s more important to consider your own personal preferences, not the calorie listings in a diet book.” For example, if you prefer being in the great outdoors to exercising indoors, you may find that hiking becomes a constant in your life, whereas the treadmill might be tossed aside after a brief interlude. Start with your likes and dislikes, and find ways to make exercise a part of your daily life, such as walking the dog. With this approach, you’re likely to make a long commitment to an exercise program simply because it naturally enhances your life.
+                    category:
+                      type: string
+                      example: Exercise
+                    tags:
+                      type: array
+                      items:
+                        type: string
+    post:
+      description: Add an article to the blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        200:
+          $ref: '#/components/responses/200Response'
+        500:
+          $ref: '#/components/responses/500ApiError'
+components:
+  schemas:
+    Article:
+      type: object
+      required: 
+        - posted_date
+        - content
+        - category
+        - tags
+      properties:
+        posted_date:
+          type: string
+          format: date
+          example: April 14, 2017
+        content:
+          type: string
+          example: blah blah blah
+        category:
+          type: string
+          example: Exercise
+        tags:
+          type: array
+          items:
+            type: string
+  responses:
+    200Response:
+      description: This article has been created.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 200
+    500ApiError:
+      description: This is an unexpected error.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 500
+              message:
+                type: string
+                example: This is an error
+          
+        
+    
+                    
